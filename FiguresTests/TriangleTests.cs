@@ -36,6 +36,20 @@ namespace FiguresTests
                 triangle.A = -1; 
             });
             Assert.Equal("Each side must be above 0", exception.Message);
+
+            exception = Assert.Throws<ArgumentException>(() =>
+            {
+                var triangle = new Triangle(1, 2, 2);
+                triangle.B = -1;
+            });
+            Assert.Equal("Each side must be above 0", exception.Message);
+
+            exception = Assert.Throws<ArgumentException>(() =>
+            {
+                var triangle = new Triangle(1, 2, 2);
+                triangle.C = -1;
+            });
+            Assert.Equal("Each side must be above 0", exception.Message);
         }
 
         [Fact]
@@ -45,6 +59,20 @@ namespace FiguresTests
             {
                 var triangle = new Triangle(1, 2, 2);
                 triangle.A = 5;
+            });
+            Assert.Equal("A triangle with these sides doesn't exist", exception.Message);
+
+            exception = Assert.Throws<ArgumentException>(() =>
+            {
+                var triangle = new Triangle(1, 2, 2);
+                triangle.B = 5;
+            });
+            Assert.Equal("A triangle with these sides doesn't exist", exception.Message);
+
+            exception = Assert.Throws<ArgumentException>(() =>
+            {
+                var triangle = new Triangle(1, 2, 2);
+                triangle.C = 5;
             });
             Assert.Equal("A triangle with these sides doesn't exist", exception.Message);
         }
