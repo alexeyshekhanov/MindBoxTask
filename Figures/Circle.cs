@@ -16,7 +16,6 @@ namespace Figures
         {
             Validation(r);
             radius = r;
-
         }
 
         public double Radius
@@ -34,10 +33,10 @@ namespace Figures
             return Math.PI * radius * radius;
         }
 
-        private void Validation(double value)
+        private void Validation(double r)
         {
-            if (value <= 0)
-                throw new ArgumentException("The radius is invalid");
+            if (r <= 0)
+                throw new ArgumentException("The radius is invalid", nameof(r));
         }
     }
 }

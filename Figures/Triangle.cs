@@ -32,7 +32,7 @@ namespace Figures
             get { return b; }
             set
             {
-                Validation(value, A, C);
+                Validation(A, value, C);
                 b = value;
             }
         }
@@ -41,7 +41,7 @@ namespace Figures
             get { return c; }
             set
             {
-                Validation(value, B, A);
+                Validation(A, B, value);
                 c = value;
             }
         }
@@ -52,19 +52,36 @@ namespace Figures
             return Math.Sqrt(semiPerimeter * (semiPerimeter - a) * (semiPerimeter - b) * (semiPerimeter - c));
         }
 
-        public bool isRightTriangle()
+        public bool IsRightTriangle()
         {
-            if (a * a + b * b == c * c || a * a + c * c == b * b || b * b + c * c == b * b)
-                return true;
-            return false;
+            return a * a + b * b == c * c || a * a + c * c == b * b || b * b + c * c == b * b;
         }
 
         private void Validation(double a, double b, double c)
         {
-            if (a <= 0 || b <= 0 || c <= 0)
-                throw new ArgumentException("Each side must be above 0");
-            if (a + b <= c || a + c <= b || b + c <= a)
-                throw new ArgumentException("A triangle with these sides doesn't exist");
+            var paramName = String.Empty;
+
+            if (a <= 0)
+                paramName = nameof(a);
+            else if (b <= 0)
+                paramName = nameof(b);
+            else if (c <= 0)
+                paramName = nameof(c);
+
+            if (paramName.Length != 0)
+                throw new ArgumentException("Each side must be above 0", paramName);
+
+            paramName = String.Empty;
+
+            if (b + c <= a)           // неравенство треугольника
+                paramName = nameof(a);
+            else if (a + c <= b)
+                paramName = nameof(b);
+            else if (a + b <= c)
+                paramName = nameof(c);
+
+            if (paramName.Length != 0)
+                throw new ArgumentException("A triangle with these sides doesn't exist or it is degenerative", paramName);
         }
     }
 }

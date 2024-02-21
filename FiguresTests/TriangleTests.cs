@@ -16,7 +16,9 @@ namespace FiguresTests
         {
             var exception = Assert.Throws<ArgumentException>(() => 
                 new Triangle(1, 2, 3));
-            Assert.Equal("A triangle with these sides doesn't exist", exception.Message);
+            exception.Message.Should().StartWith("A triangle with");
+            exception.ParamName.Should().Be("c");
+
         }
 
         [Fact]
@@ -24,7 +26,10 @@ namespace FiguresTests
         {
             var exception = Assert.Throws<ArgumentException>(() =>
                 new Triangle(1, 2, 0));
-            Assert.Equal("Each side must be above 0", exception.Message);
+            exception.Message.Should().StartWith("Each side must");
+            exception.ParamName.Should().Be("c");
+
+
         }
 
         [Fact]
@@ -35,21 +40,25 @@ namespace FiguresTests
                 var triangle = new Triangle(1, 2, 2);
                 triangle.A = -1; 
             });
-            Assert.Equal("Each side must be above 0", exception.Message);
+            exception.Message.Should().StartWith("Each side must");
+            exception.ParamName.Should().Be("a");
 
             exception = Assert.Throws<ArgumentException>(() =>
             {
                 var triangle = new Triangle(1, 2, 2);
                 triangle.B = -1;
             });
-            Assert.Equal("Each side must be above 0", exception.Message);
+            exception.Message.Should().StartWith("Each side must");
+            exception.ParamName.Should().Be("b");
 
             exception = Assert.Throws<ArgumentException>(() =>
             {
                 var triangle = new Triangle(1, 2, 2);
                 triangle.C = -1;
             });
-            Assert.Equal("Each side must be above 0", exception.Message);
+            exception.Message.Should().StartWith("Each side must"); 
+            exception.ParamName.Should().Be("c");
+
         }
 
         [Fact]
@@ -60,21 +69,26 @@ namespace FiguresTests
                 var triangle = new Triangle(1, 2, 2);
                 triangle.A = 5;
             });
-            Assert.Equal("A triangle with these sides doesn't exist", exception.Message);
+            exception.Message.Should().StartWith("A triangle with");
+            exception.ParamName.Should().Be("a");
+
 
             exception = Assert.Throws<ArgumentException>(() =>
             {
                 var triangle = new Triangle(1, 2, 2);
                 triangle.B = 5;
             });
-            Assert.Equal("A triangle with these sides doesn't exist", exception.Message);
+            exception.Message.Should().StartWith("A triangle with");
+            exception.ParamName.Should().Be("b");
+
 
             exception = Assert.Throws<ArgumentException>(() =>
             {
                 var triangle = new Triangle(1, 2, 2);
                 triangle.C = 5;
             });
-            Assert.Equal("A triangle with these sides doesn't exist", exception.Message);
+            exception.Message.Should().StartWith("A triangle with");
+            exception.ParamName.Should().Be("c");
         }
 
         [Theory]
@@ -83,7 +97,7 @@ namespace FiguresTests
         public void RightTriangleTest(double firstSide, double secondSide, double thirdSide)
         {
             var triangle = new Triangle(firstSide, secondSide, thirdSide);
-            triangle.isRightTriangle().Should().BeTrue();
+            triangle.IsRightTriangle().Should().BeTrue();
         }
 
         [Theory]
